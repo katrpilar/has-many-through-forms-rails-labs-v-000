@@ -1,1 +1,26 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+<li>
+<% @post.comments.each do |comment| %>
+  <ul><%= comment.content %></ul>
+<% end %>
+</li>
+<li>
+<% @post.comments.map(&:user).uniq.each do |u| %>
+  <ul><%= u.username %></ul>
+<% end %>
+</li>
 
+<%= form_for @post do |f| %>
+  <%= f.fields_for :comments, @post.comments.build do |comment_fields| %>
+    <%= comment_fields.label :comment_content %>
+    <%= comment_fields.text_area :content %>
+    <%= comment_fields.label "Select User" %>
+    <%= comment_fields.collection_select :user, User.all, :username, :email%>
+  <% end %>
+  <!-- <%= f.label "Content" %>
+  <%= f.text_field :content %>
+  <%= f.label "Select User" %>
+  <%= f.collection_select :users, User.all, :username, :email%> -->
+  <%= f.submit %>
+<%end%>
