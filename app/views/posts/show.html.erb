@@ -7,16 +7,17 @@
 </li>
 <li>
 <% @post.comments.map(&:user).uniq.each do |u| %>
-  <ul><%= u.username %></ul>
+  <ul><%=link_to u.username, user_path(u) %>
+</ul>
 <% end %>
 </li>
 
 <%= form_for @post do |f| %>
   <%= f.fields_for :comments, @post.comments.build do |comment_fields| %>
     <%= comment_fields.label :comment_content %>
-    <%= comment_fields.text_area :content %>
+    <%= comment_fields.text_area :content, id: 'comment_content' %>
     <%= comment_fields.label "Select User" %>
-    <%= comment_fields.collection_select :user, User.all, :username, :email%>
+    <%= comment_fields.collection_select :user, User.all, :username, :email, include_blank: true%>
   <% end %>
   <!-- <%= f.label "Content" %>
   <%= f.text_field :content %>
