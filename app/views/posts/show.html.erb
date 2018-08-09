@@ -13,7 +13,7 @@
 </li>
 
 <%= form_for @post do |f| %>
-  <!-- <%= f.collection_check_boxes :comment_user_id, Comments.all, :id, :content%> -->
+  <%= f.collection_check_boxes :comment_user_id, Comments.all, :id, :content%>
   <%= f.fields_for :comments, @post.comments.build do |comment_fields| %>
     <%= comment_fields.label :comment_content %>
     <%= comment_fields.text_area :content, id: 'comment_content' %>
